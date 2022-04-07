@@ -1,3 +1,4 @@
+#Simulador del tipo Type
 class tipo:
 
     def __init__(self, name, size, alineacion) -> None:
@@ -5,6 +6,7 @@ class tipo:
         self.size = size
         self.alineacion = alineacion
 
+#Simulador del tipo Struct
 class estructura:
 
     def __init__(self, name, tipos, size) -> None:
@@ -12,6 +14,7 @@ class estructura:
         self.tipos = tipos  #tipos es una lista
         self.size = size
 
+#Simulador de los arreglos
 class alias:
 
     def __init__(self, name, tipo, size) -> None:
@@ -19,11 +22,12 @@ class alias:
         self.tipo = tipo
         self.size = size
 
+#Variable global que representa la posicion en la memoria
 posicion = 0
 
 def main():
 
-
+    #Arreglos de los tipos ATOMICOS, STRUCTS Y ARREGLOS en ese orden
     tipos = []
     structs = []
     aliases = []
@@ -37,8 +41,10 @@ def main():
             instruccion = entrada.split()
 
             if instruccion[0] == "ATOMICO":
-                    
-                if search_name_list(instruccion[1],tipos):
+                """
+                Se verifica primero que no exista un tipo 
+                """
+                if search_name_list(instruccion[1],tipos) or search_name_list(instruccion[1],structs) or search_name_list(instruccion[1],aliases):
                    print(f"Error: El Tipo de dato {instruccion[1]} ya esta creado.")
                 else:
 
@@ -56,7 +62,7 @@ def main():
 
             elif instruccion[0] == "STRUCT":
 
-                if search_name_list(instruccion[1],structs):
+                if search_name_list(instruccion[1],tipos) or search_name_list(instruccion[1],structs) or search_name_list(instruccion[1],aliases):
                    print(f"Error: El Struct {instruccion[1]} ya esta creado.")
                 else:
                     aux = True
@@ -76,7 +82,7 @@ def main():
             
             elif instruccion[0] == "ARREGLO":
 
-                if search_name_list(instruccion[1],aliases):
+                if search_name_list(instruccion[1],tipos) or search_name_list(instruccion[1],structs) or search_name_list(instruccion[1],aliases):
                    print(f"Error: El alias {instruccion[1]} ya esta creado.")
                 else:
 

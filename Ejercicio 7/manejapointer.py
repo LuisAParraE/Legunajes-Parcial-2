@@ -1,3 +1,4 @@
+#CLASE QUE SIMULA A UN APUNTADOR POR SISTEMA DE LOCKS AND KEYS
 class pointer:
 
     def __init__(self, name, direccion, key) -> None:
@@ -5,6 +6,7 @@ class pointer:
         self.direccion = direccion
         self.key = key
 
+#CLASE QUE CORRESPONDE A LOS ELEMETOS APUNTADOS
 class elemento:
 
     def __init__(self, value, key) -> None:
@@ -17,6 +19,7 @@ def main():
     apuntadores = []
     elementos = []
     print("SIMULADOR DE APUNTADORES USANDO EL METODO DE LOCKS AND KEYS:")
+
     while True:
 
         entrada = input("Indique Instrucción: ")
@@ -26,7 +29,11 @@ def main():
             instruccion = entrada.split()
 
             if instruccion[0] == "RESERVAR":
-                    
+                
+                """
+                Primero verificamos que si existe el apuntador, de ya existir se le asigna una nueva key y dirección de apuntado
+                sino, se crea y tambien se crea el elemento
+                """
                 if search_name_list(instruccion[1],apuntadores):
 
                     pos_elemento = len(elementos)
@@ -50,6 +57,12 @@ def main():
 
             elif instruccion[0] == "ASIGNAR":
 
+                """
+                Primero verificamos que si existe el apuntador,que estamos asignando, si no lo está da error.
+                Luego verificamos si el apuntandor al que le estan asignando la información existe. Si no existe, se crea
+                y luego se le asigna la información.
+                """
+
                 if not search_name_list(instruccion[2],apuntadores):
                     print(f"Error: El Apuntador {instruccion[2]} no esta definido.")
                 else:
@@ -67,16 +80,30 @@ def main():
 
             elif instruccion[0] == "LIBERAR":
 
+                """
+                Se verifica que el Apuntador que se desee liberar este definido. Si no lo está, error. Luego se verifica
+                si ya estaba liberado el elemento. De ser aasí dice que lo está. Sino lo libera
+                """
+
                 if not search_name_list(instruccion[1],apuntadores):
                    print(f"Error: El Apuntador {instruccion[1]} no esta definido.")
                 else:
                     pos_pointer = get_pointer(instruccion[1],apuntadores)
                     pos_elemento = apuntadores[pos_pointer].direccion
-                    elementos[pos_elemento].key = None
 
-                    print(f"Se liberó {apuntadores[pos_pointer].name}")
+                    if(elementos[pos_elemento].key == None):
+                        print(f"Error: Ya esta liberado {apuntadores[pos_pointer].name}")
+                    else:
+                        elementos[pos_elemento].key = None
+
+                        print(f"Se liberó {apuntadores[pos_pointer].name}")
 
             elif instruccion[0] == "IMPRIMIR":
+
+                """
+                Se verifica que el Apuntador que se desee liberar este definido. Si no lo está, error. Luego se verifica
+                si se posee la misma llave que el elemento que se quiere imprimir
+                """
 
                 if not search_name_list(instruccion[1],apuntadores):
                     print(f"Error: El Apuntador {instruccion[1]} no esta definido.")
@@ -93,7 +120,7 @@ def main():
             else:
                 print("Instrucción No valida")
 
-
+#FUNCION QUE DADO UN NOMBRE Y UNA LISTA, RETORNA TRUE SI SE ENCIENTRA, FALSE SI NO.
 def search_name_list(name, list):
 
     for element in list:
@@ -102,6 +129,7 @@ def search_name_list(name, list):
 
     return False
 
+#FUNCION QUE DADO UN NOMBRE Y UNA LISTA TE RETORNA EL INDICE EN DONDE SE ENCUENTRA
 def get_pointer(name, list_pointers):
     
     i = 0
