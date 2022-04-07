@@ -16,7 +16,7 @@ def main():
 
     apuntadores = []
     elementos = []
-
+    print("SIMULADOR DE APUNTADORES USANDO EL METODO DE LOCKS AND KEYS:")
     while True:
 
         entrada = input("Indique Instrucción: ")
